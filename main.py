@@ -20,13 +20,14 @@ def load_KEY(keyfile):
 
 def fetchNews(entryIndex):
     NewsFeed = feedparser.parse("https://rss.nytimes.com/services/xml/rss/nyt/US.xml")
-    entry = NewsFeed.entires[entryIndex]
+    entry = NewsFeed.entries[0]
+    return entry
 
 # tts_model = TTS.list_models(Self: TTS)[0]
 
 # tts = TTS(tts_model)
 
-wav = tts.tts("This is a test! This is also a test!!", speaker=tts.speakers[0], language=tts.languages[0])
+# wav = tts.tts("This is a test! This is also a test!!", speaker=tts.speakers[0], language=tts.languages[0])
 
 
 openai.api_key = load_KEY("API_KEY")
@@ -35,15 +36,19 @@ openai.api_key = load_KEY("API_KEY")
 
 
 
-print("The following AI models are available via the API:filename")
-print(availableModels)
+# print("The following AI models are available via the API:filename")
+# print(availableModels)
 
+news = fetchNews(1)
+print("\n\nNews: ", news.summary)
 output = openai.ChatCompletion.create(
     model='gpt-3.5-turbo-16k',
-    messages=[{"role":"user", "content": "In 5 words: Tell me about the US capitol."}]
+    messages=[{"role":"user", "content": "In 5 words summarize: " + news.summary  }]
 )
-
+print("\n\nAI Summary: ")
 print(output.choices[0].message.content)
+
+
 
 #Get API key from file
 
