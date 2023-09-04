@@ -82,6 +82,9 @@ def localTTS(inputText, outputFile):
     tts = TTS(model_name)
     tts.tts_to_file(text=podcast, file_path=outputFile)
 
+def playAudio(audioFile):
+    sound = AudioSegment.from_file(audioFile)
+    play(sound)
 
 # Init OpenAI
 openai.api_key = load_KEY("API_KEY")
@@ -120,14 +123,6 @@ for ars in range(1):
 # print(podcast, "\n\n")
 
 
-
-
-# Load the WAV file
-# sound = AudioSegment.from_file("output.wav")
-
-# Play the sound
-# play(sound)
-
 print("______ EDITED PODCAST _________")
 editedPodcast = editPodcast(podcast)
 print(editedPodcast)
@@ -136,6 +131,5 @@ print(editedPodcast)
 # play(sound)
 
 googleTTS(editedPodcast, "podcast.mp3")
-sound = AudioSegment.from_file("podcast.mp3")
-play(sound)
+playAudio("podcast.mp3")
 
