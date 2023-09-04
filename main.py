@@ -32,7 +32,6 @@ def googleTTS(inputText, outputFile):
     with open(outputFile, "wb") as out:
         out.write(response.audio_content)
 
-
 def getStringDate():
     current_date = datetime.now()
     day = current_date.day
@@ -78,10 +77,11 @@ def editPodcast(podcast):
     )
     return edit.choices[0].message.content + " "
 
+def localTTS(inputText, outputFile):
+    model_name = 'tts_models/en/ljspeech/tacotron2-DDC'
+    tts = TTS(model_name)
+    tts.tts_to_file(text=podcast, file_path=outputFile)
 
-# Init TTS
-model_name = 'tts_models/en/ljspeech/tacotron2-DDC'
-tts = TTS(model_name)
 
 # Init OpenAI
 openai.api_key = load_KEY("API_KEY")
@@ -121,7 +121,6 @@ for ars in range(1):
 
 
 
-# tts.tts_to_file(text=podcast, file_path="output.wav")
 
 # Load the WAV file
 # sound = AudioSegment.from_file("output.wav")
