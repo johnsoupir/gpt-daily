@@ -11,7 +11,7 @@ nytRSS = "https://rss.nytimes.com/services/xml/rss/nyt/US.xml"
 hackadayRSS = "https://hackaday.com/blog/feed/"
 arsTechnicaRSS = "https://feeds.arstechnica.com/arstechnica/index"
 
-def googleTTS(inputText):
+def googleTTS(inputText, outputFile):
     client = texttospeech.TextToSpeechClient()
     synthInput = texttospeech.SynthesisInput(text=inputText)
     voice = texttospeech.VoiceSelectionParams(
@@ -29,7 +29,7 @@ def googleTTS(inputText):
         input = synthInput, voice=voice, audio_config=audio_config
     )
 
-    with open("podcast.mp3", "wb") as out:
+    with open(outputFile, "wb") as out:
         out.write(response.audio_content)
 
 
@@ -136,7 +136,7 @@ print(editedPodcast)
 # sound = AudioSegment.from_file("output.wav")
 # play(sound)
 
-googleTTS(editedPodcast)
+googleTTS(editedPodcast, "podcast.mp3")
 sound = AudioSegment.from_file("podcast.mp3")
 play(sound)
 
